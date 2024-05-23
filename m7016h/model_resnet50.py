@@ -42,7 +42,7 @@ def create_model_phase_1(target_image_width=224, target_image_height=224):
 
 def create_model_phase_2(base_model, model):
     # Unfreeze some layers for fine-tuning
-    for layer in base_model.layers[-5:]:
+    for layer in base_model.layers[-4:]:
         layer.trainable = True
 
     model.compile(
