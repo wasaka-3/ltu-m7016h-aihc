@@ -23,7 +23,6 @@ def initialize_generators(train_dir=dp.train_dir, val_dir=dp.val_dir, test_dir=d
         fill_mode='nearest'
     )
 
-    val_test_datagen = ImageDataGenerator()
     image_size = ()
     for files in os.walk(os.path.join(absolute_dataset_path(train_dir), 'benign')):
         image_path = os.path.join(absolute_dataset_path(train_dir), 'benign', files[2][0])
@@ -32,8 +31,8 @@ def initialize_generators(train_dir=dp.train_dir, val_dir=dp.val_dir, test_dir=d
             image_size = img.size
         break
 
-    target_image_width = image_size[0] // dp.image_size_divider
-    target_image_height = image_size[1] // dp.image_size_divider
+    target_image_width = 224
+    target_image_height = 224
 
     train_generator = train_datagen.flow_from_directory(
         absolute_dataset_path(train_dir),
@@ -42,7 +41,7 @@ def initialize_generators(train_dir=dp.train_dir, val_dir=dp.val_dir, test_dir=d
         class_mode='binary'
     )
 
-    val_generator = val_test_datagen.flow_from_directory(
+    val_generator = train_datagen.flow_from_directory(
         absolute_dataset_path(val_dir),
         target_size=(target_image_width, target_image_height),
         batch_size=dp.batch_size,

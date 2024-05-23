@@ -18,20 +18,20 @@ if __name__ == "__main__":
 
     model = create_model(target_image_width, target_image_height)
 
-    tensorboard_callback, checkpoint_callback, run_fit_log_dir = prepare(
+    callbacks, run_fit_log_dir = prepare(
         force_clean_fit=False,
         force_clean_checkpoints=False
     )
 
-    train = False
+    train = True
     if train:
         start_training(
             model=model,
             train_generator=train_generator,
             val_generator=val_generator,
-            callbacks=[tensorboard_callback, checkpoint_callback],
-            epochs=dp.epochs
-            # epochs=500
+            callbacks=callbacks,
+            # epochs=dp.epochs
+            epochs=500
         )
 
     best_model_weights = get_best_model_weights(checkpoint_dir=dp.checkpoint_dir)

@@ -4,6 +4,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.utils import plot_model
+import keras
 
 
 def create_model(target_image_width, target_image_height):
@@ -32,9 +33,10 @@ def create_model(target_image_width, target_image_height):
 
     model.compile(
         optimizer=Adam(learning_rate=1e-4),
-        loss=tf.keras.losses.BinaryCrossentropy(),
+        loss=tf.keras.losses.BinaryFocalCrossentropy(),
         metrics=[
             'accuracy',
+            keras.metrics.AUC(),
             tf.keras.metrics.BinaryAccuracy(),
             tf.keras.metrics.FalseNegatives(),
             tf.keras.metrics.Precision()
@@ -43,3 +45,5 @@ def create_model(target_image_width, target_image_height):
     plot_model(model, to_file='model.png', show_shapes=True)
 
     return model
+
+

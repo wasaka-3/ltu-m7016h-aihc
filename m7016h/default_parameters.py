@@ -11,11 +11,11 @@ test_dir = os.path.join(dataset_folder, 'test')
 logs_dir = os.path.join(home_folder, 'logs')
 fit_logs_dir = os.path.join(logs_dir, 'fit')
 checkpoint_dir = os.path.join(home_folder, 'checkpoints')
-run_id=f"{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
+run_id = f"{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
 image_size_divider = 3
 batch_size = 16
-histogram_freq=1
-epochs=256
+histogram_freq = 1
+epochs = 256
 is_mac = platform.system() == 'Darwin'
 
 

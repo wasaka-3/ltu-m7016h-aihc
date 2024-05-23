@@ -760,3 +760,4 @@ gradle-app.setting
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,intellij+all,intellij+iml,pycharm,pycharm+all,pycharm+iml,python,maven,gradle,visualstudiocode,vim,macos,linux,windows,emacs,pythonvanilla,node
 
 model.png
+model*.png

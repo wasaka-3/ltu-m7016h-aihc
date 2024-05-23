@@ -14,7 +14,7 @@ pip3 install --requirement=requirements.txt
 ## How to start and run
 
 ```shell
-tensorboard --logdir=~/m7016h/logs/fit --port=6006
+python3 main.py
 ```
 
 ## How to start tensorboard and run
