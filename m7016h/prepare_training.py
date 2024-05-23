@@ -39,10 +39,9 @@ def prepare(
     checkpoint_callback = ModelCheckpoint(
         filepath=os.path.join(checkpoint_dir, f'model-{run_id}-' + '{epoch:04d}.keras'),
         monitor='val_loss',
-        save_best_only=True,
-        mode='max'
+        save_best_only=True
     )
 
-    early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
+    early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
 
-    return [tensorboard_callback, checkpoint_callback], run_fit_log_dir
+    return [tensorboard_callback, checkpoint_callback, early_stopping], run_fit_log_dir
