@@ -33,7 +33,7 @@ if __name__ == "__main__":
     base_model, model = create_model_phase_1(target_image_width=target_image_width,
                                              target_image_height=target_image_height)
     if train:
-        early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
+        early_stopping = EarlyStopping(monitor='val_loss', patience=50, restore_best_weights=True)
         model_checkpoint = ModelCheckpoint('best_model.keras', save_best_only=True, monitor='val_loss')
 
         history, model = start_training_resnet50_extract_features(
