@@ -32,6 +32,4 @@ def start_training_resnet50_phase_2(model,
         callbacks=callbacks
     )
 
-    model.load_weights('best_model.keras')
-
     return history, model

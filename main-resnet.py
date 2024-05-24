@@ -33,14 +33,15 @@ if __name__ == "__main__":
     base_model, model = create_model_phase_1(target_image_width=target_image_width,
                                              target_image_height=target_image_height)
     if train:
-        early_stopping = EarlyStopping(monitor='val_loss', patience=50, restore_best_weights=True)
-        model_checkpoint = ModelCheckpoint('best_model.keras', save_best_only=True, monitor='val_loss')
+        early_stopping = EarlyStopping(monitor='val_loss', patience=100, restore_best_weights=True)
+        model_checkpoint = ModelCheckpoint('best_model.keras', save_best_only=True, monitor='val_accuracy', mode='max')
+        all_callbacks = [early_stopping, model_checkpoint] + callbacks
 
         history, model = start_training_resnet50_extract_features(
             model=model,
             train_generator=train_generator,
             val_generator=val_generator,
-            callbacks=[early_stopping, model_checkpoint] + callbacks,
+            callbacks=all_callbacks.copy(),
             epochs=dp.epochs
         )
 
@@ -49,7 +50,7 @@ if __name__ == "__main__":
         history, model = start_training_resnet50_phase_2(model,
                                                          train_generator,
                                                          val_generator,
-                                                         callbacks=[early_stopping, model_checkpoint],
+                                                         callbacks=all_callbacks.copy(),
                                                          epochs=dp.epochs)
 
     model.load_weights('best_model.keras')
@@ -57,8 +58,8 @@ if __name__ == "__main__":
     val_loss, val_accuracy, val_auc, val_binary_accuracy, val_false_negatives, val_precision = model.evaluate(
         val_generator)
     print(f'Validation Accuracy: {val_accuracy * 100:.2f}%')
-    print(f'Test Precision: {val_precision * 100:.2f}%')
-    print(f'Test Loss: {val_loss * 100:.2f}%')
+    print(f'Validation Precision: {val_precision * 100:.2f}%')
+    print(f'Validation Loss: {val_loss * 100:.2f}%')
 
     test_loss, test_accuracy, test_auc, test_binary_accuracy, test_false_negatives, test_precision = model.evaluate(
         test_generator)
